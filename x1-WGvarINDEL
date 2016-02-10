@@ -300,9 +300,7 @@ done
 
 ##---------------------------
 #7. Report
-cd ${WORK_DIR}
-mkdir -p data 
-cd data
+cd ${data_DIR}
 for indel in q t
 do
 \cp ${run_DIR}/${indel}/Seq*_Lg* .
