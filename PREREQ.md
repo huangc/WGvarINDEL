@@ -24,8 +24,6 @@ mkdir -p ${WORK_DIR}/scratch
 ### Use TRegGA workflow to obtain the soapdenovo2-assembled contigs and scaffolds of rice samples
 Note: here the contigs were assembled previously, and we are just retrieving those contig files.
 ```
-cd ${WORK_DIR}
-mkdir -p ${prereq_DIR}
 cd ${prereq_DIR}
 
 for i in ${SAMPLE}
