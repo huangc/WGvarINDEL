@@ -21,59 +21,6 @@ mkdir -p ${WORK_DIR}/data
 mkdir -p ${WORK_DIR}/scratch
 ```
 
-## prepare for python scripts
-```
-cd ${WORK_DIR}/bin
-### getTarget.py - python script for retrieving sequence by range
-(ref: TRegGA getTarget.py)
-
-#!/usr/bin/python
-
-import sys
-from Bio import SeqIO
-
-infile = sys.argv[1]
-slabel = sys.argv[2]
-frompos = sys.argv[3]
-topos = sys.argv[4]
-
-record = SeqIO.read(infile, "fasta")
-sub_record = record[int(frompos):int(topos)]
-
-SeqIO.write(sub_record, slabel + ".fasta", "fasta")
-```
-
-### xgetseq - python script for retrieving reference sequences 
-(ref: TRegGA xgetseq)
-```
-#!/usr/bin/env bash
-set -exo pipefail
-
-# 0. Check for software prerequisites:
-which makeblastdb
-which gt
-which blastdbcmd
-
-# 1. Retrieve Oryza sativa japonica (Osj) sequences from Ensembl:
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-26/fasta/oryza_sativa/dna/Oryza_sativa.IRGSP-1.0.26.dna.genome.fa.gz
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-26/embl/oryza_sativa/Oryza_sativa.IRGSP-1.0.26.dat.gz
-wget ftp://ftp.ensemblgenomes.org/pub/plants/release-26/gff3/oryza_sativa/Oryza_sativa.IRGSP-1.0.26.gff3.gz
-gunzip -f *.gz
-mv Oryza_sativa.IRGSP-1.0.26.dat Oryza_sativa.IRGSP-1.0.26.embl
-
-# 2. Add the label "OsjChr" to the chromosome sequence names so that ">1" becomes ">OsjChr1", etc.:
-sed -i -e "s/^>\([1-9]\)/>OsjChr\1/" Oryza_sativa.IRGSP-1.0.26.dna.genome.fa
-
-# 3. Create BLAST databases for the genome sequences:
-makeblastdb -in Oryza_sativa.IRGSP-1.0.26.dna.genome.fa -dbtype nucl -parse_seqids -out OsjDNA
-
-# 4. Extract the chromosome sequences into file OsjCHR.fa:
-blastdbcmd -db OsjDNA -entry OsjChr1,OsjChr2,OsjChr3,OsjChr4,OsjChr5,OsjChr6,OsjChr7,OsjChr8,OsjChr9,OsjChr10,OsjChr11,OsjCh\
-r12 \
-    | sed "s/^>lcl|/>/;" \
-    > OsjCHR.fa
-```
-
 ### Use TRegGA workflow to obtain the soapdenovo2-assembled contigs and scaffolds of rice samples
 Note: here the contigs were assembled previously, and we are just retrieving those contig files.
 ```
