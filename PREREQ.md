@@ -9,13 +9,22 @@
 * xgetseq from TRegGA #with modification to retrieve also individual chrs
 
 ```
+## Setup sub-directory for workflow
 source 0SOURCE
-cd ${TALEN_DIR}
-mkdir -p ${TALEN_DIR}/bin
-cd ${TALEN_DIR}/bin
-```
+cd ${WORK_DIR}
+mkdir -p ${WORK_DIR}/prereq
+mkdir -p ${WORK_DIR}/doc
+mkdir -p ${WORK_DIR}/bin
+mkdir -p ${WORK_DIR}/src
+mkdir -p ${WORK_DIR}/run
+mkdir -p ${WORK_DIR}/data
+mkdir -p ${WORK_DIR}/scratch
 
-### getTarget.py - python script for retrieving sequence by range (ref: TRegGA getTarget.py)
+## prepare for python scripts
+cd ${WORK_DIR}/bin
+
+### getTarget.py - python script for retrieving sequence by range
+(ref: TRegGA getTarget.py)
 ```
 #!/usr/bin/python
 
@@ -33,7 +42,8 @@ sub_record = record[int(frompos):int(topos)]
 SeqIO.write(sub_record, slabel + ".fasta", "fasta")
 ```
 
-### xgetseq - python script for retrieving reference sequences (ref: TRegGA xgetseq)
+### xgetseq - python script for retrieving reference sequences 
+(ref: TRegGA xgetseq)
 ```
 #!/usr/bin/env bash
 set -exo pipefail
@@ -66,13 +76,13 @@ r12 \
 ### Use TRegGA workflow to obtain the soapdenovo2-assembled contigs and scaffolds of rice samples
 Note: here the contigs were assembled previously, and we are just retrieving those contig files.
 ```
-cd ${TALEN_DIR}
+cd ${WORK_DIR}
 mkdir -p ${prereq_DIR}
 cd ${prereq_DIR}
 
 for i in ${SAMPLE}
 do
-scp userID@mason.indiana.edu:/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo/${i}/${i}-soap.contig .
+scp ${mason_UID}:${denovo_DIR}/${i}/${i}-soap.contig .
 makeblastdb -in ${i}-soap.contig -dbtype nucl -out DB_${i}_contig -parse_seqids
 done
 ```
@@ -100,4 +110,3 @@ blastdbcmd -db ${prereq_DIR}/DB_${REFNAME} -entry "lcl|Chr${i}" -dbtype nucl -ou
 sed -i -e "s/>lcl|/>/" OsjChr${i}.fa
 done
 ```
-
