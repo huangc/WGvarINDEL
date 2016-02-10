@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+source 0SOURCE
+cd ${WORK_DIR}
+
+## Clean up the intermediate files
+cd ${run_DIR}
+\rm -r *.Reps.psr
+\rm -r *.Reps.psl.tailer*
+
+## clean up *.sample, *.fasta and *.fa files
+for indel in q t
+do
+cd ${run_DIR}/${indel}
+mkdir -p ${run_DIR}/${indel}/file_sample
+mv *.sample ${run_DIR}/${indel}/file_sample
+
+mkdir -p ${run_DIR}/${indel}/file_contig
+mv *.fa ${run_DIR}/${indel}/file_contig
+
+mkdir -p ${run_DIR}/${indel}/file_gap
+mv *_GAP_*.fasta ${run_DIR}/${indel}/file_gap
+
+done
+
