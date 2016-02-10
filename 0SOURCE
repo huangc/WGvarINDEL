@@ -1,0 +1,38 @@
+## General
+WORK_DIR=/your_home/your_workdir
+SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
+REFSEQ=OsjCHR.fa
+REFGFF=OsjCHR.gff3
+REFNAME=OsjCHR
+SEQ="soap.contig"
+SEQNAME="contig"
+
+## Sub-directory for workflow
+prereq_DIR=${WORK_DIR}/prereq
+doc_DIR=${WORK_DIR}/doc
+bin_DIR=${WORK_DIR}/bin
+src_DIR=${WORK_DIR}/src
+run_DIR=${WORK_DIR}/run
+data_DIR=${WORK_DIR}/data
+scratch_DIR=${WORK_DIR}/scratch
+
+## blastn
+DB_REFSEQ=OsjCHR
+DB_ILOCUS=OsjLOCUS
+DB_PTALEN=OsjpTALEN
+OUTFMT="6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore gaps qcovs qcovhsp"
+EVALUE="1e-100"
+# PERC_IDENTITY=99
+NUM_THREADS=4
+# GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
+# GAP_MINSIZE=4 #Minimal size of total gaps, more than and not including this number.
+# REWARD=1
+# PENALTY=-1
+# GAPOPEN=4
+# GAPEXTEND=1
+
+# blat
+PERC_IDENTITY=99
+MIN_SCORE=250
+GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
+GAP_MINSIZE=100 #Minimal size of total gaps, more than and not including this number.
