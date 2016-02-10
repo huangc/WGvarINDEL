@@ -4,6 +4,7 @@ SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
 REFSEQ=OsjCHR.fa
 REFGFF=OsjCHR.gff3
 REFNAME=OsjCHR
+SEQ_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo
 SEQ="soap.contig"
 SEQNAME="contig"
 
