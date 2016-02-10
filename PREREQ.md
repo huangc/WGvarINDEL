@@ -8,8 +8,8 @@
 * getTarget.py from TRegGA #with modification to retrieve fasta instead of embl
 * xgetseq from TRegGA #with modification to retrieve also individual chrs
 
-```
 ## Setup sub-directory for workflow
+```
 source 0SOURCE
 cd ${WORK_DIR}
 mkdir -p ${WORK_DIR}/prereq
@@ -19,13 +19,14 @@ mkdir -p ${WORK_DIR}/src
 mkdir -p ${WORK_DIR}/run
 mkdir -p ${WORK_DIR}/data
 mkdir -p ${WORK_DIR}/scratch
+```
 
 ## prepare for python scripts
+```
 cd ${WORK_DIR}/bin
-
 ### getTarget.py - python script for retrieving sequence by range
 (ref: TRegGA getTarget.py)
-```
+
 #!/usr/bin/python
 
 import sys
