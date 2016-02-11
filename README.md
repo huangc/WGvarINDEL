@@ -1,4 +1,4 @@
-# Finding whole genome long INDELs with NGS reads
+# Finding whole genome long INDELs with denovo-assembled contigs from NGS reads
 Contributed by Chun-Yuan Huang, 2/10/2016
 
 ## Aims:
