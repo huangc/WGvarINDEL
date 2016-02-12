@@ -8,8 +8,8 @@ source ./0SOURCE
 ## Prerequisite software:
 # NCBI BLAST+
 # BLAT (The BLAST-Like Alignment Tool)
-# getTarget.py from TRegGA #with modification to retrieve fasta instead of embl
-# xgetseq from TRegGA #with modification to retrieve also individual chrs
+# getTarget.py from TRegGA with modification to retrieve fasta instead of embl
+# xgetseq from TRegGA with modification to retrieve also individual chrs
 
 ##--------------------------------------------
 # Setup sub-directory for workflow
@@ -24,7 +24,7 @@ mkdir -p ${WORK_DIR}/scratch
 
 
 ## Prepare for the SOAPdenovo2-assembled sample contigs and scaffolds using TRegGA workflow.
-# Note: here the contigs have been assembled previously, and we are just retrieving those contig files.
+# Note: the contigs have been assembled previously, and we are just retrieving those contig files.
 cd ${prereq_DIR}
 for i in ${SAMPLE}
 do
@@ -36,19 +36,14 @@ done
 echo "
 #!/bin/bash
 #PBS -m abe
-#PBS -l nodes=1:ppn=8,vmem=20gb,walltime=01:00:00
+#PBS -l nodes=1:ppn=8,vmem=20gb,walltime=00:30:00
 #PBS -N prereq-on-${REFSEQNAME}
 #PBS -j oe
 
-module add bwa/0.7.6a
-module add java
-module add samtools/0.1.19
-module add picard/1.52
-
 cd ${prereq_DIR}
-# Retrieve the reference sequence
-sh ${bin_DIR}/xgetseq
 
+# Retrieve and index the reference sequence for Blast
+sh ${bin_DIR}/xgetseq
 " > prereq-on-${REFSEQNAME}.qsub
 qsub prereq-on-${REFSEQNAME}.qsub
 
