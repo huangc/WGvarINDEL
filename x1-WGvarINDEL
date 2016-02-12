@@ -307,3 +307,14 @@ done
 
 done
 
+##---------------------------
+#7. Report
+cd ${data_DIR}
+for indel in q t
+do
+\cp ${run_DIR}/${indel}/Seq*_Lg* .
+done
+
+rename Seq.q SeqIns Seq.q*
+rename Seq.t SeqDel Seq.t*
+
