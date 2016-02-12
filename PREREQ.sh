@@ -3,7 +3,7 @@ source ./0SOURCE
 
 ## Prerequisite data:
 # Run TRegGA workflow to obtain the soapdenovo2-assembled contigs (and scaffolds) of rice samples. Only contigs are used in the current workflow.
-# Retrieve the reference rice Japonica sequence and gff3 files.
+# Retrieve and index the reference rice Japonica sequence for Blast.
 
 ## Prerequisite software:
 # NCBI BLAST+
