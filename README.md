@@ -15,9 +15,10 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 ## Execution description:
 1. Edit and setup the parameters as described in 0SOURCE, then `source 0SOURCE`
 2. Edit and prepare for the prerequisite files and softwares as described in PREREQ.sh, then `sh PREREQ.sh`
-3. Submit qsub script on Mason: `qsub x1-WGvarINDEL`
-4. Cleanup files with `sh xcleanup`
-5. Find main outputs in ${WORK_DIR}/data.
+3. Submit qsub script for blat alignment on Mason: `qsub x1-WGblat`
+4. Submit qsub script for indel analysis on Mason: `qsub x2-WGvarINDEL`
+5. Cleanup files with `sh xcleanup`
+6. Find main outputs in ${WORK_DIR}/data.
 
 ## Notes: 
 1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
