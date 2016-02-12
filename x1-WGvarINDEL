@@ -1,8 +1,8 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Aims: To investigate the Whole-Genome (WG) insertion/deletion (indel) profile of rice genomic samples under TALEN treatment.
 # Author: Chun-Yuan Huang, Ph.D.
-# Last Update: 2/5/2016
+# Last Update: 2/12/2016
 
 ##-------------------------------------------
 ## Workflow description:
@@ -15,7 +15,7 @@
 #5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 #6. Use the indel summary table to retrieve indel sequences.
 
-source 0SOURCE
+source ./0SOURCE
 cd ${run_DIR}
 
 #-----
