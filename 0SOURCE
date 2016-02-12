@@ -14,11 +14,6 @@ SEQNAME="contig"
 # SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
 SAMPLE=ZHENGSHAN97test
 
-DB_REFDNA=OsjDNA # to replace DB_OsjCHR, which is defined by DB_${REFNAME}, where REFNAME=OsjCHR.
-DB_REFSEQ=OsjCHR
-BLAST_DIR=/N/dc2/projects/brendelgroup/TRegGA/bin
-BLAT_DIR=/N/soft/mason/blat/blat35/bin/x86_64
-
 ## Sub-directory for workflow
 prereq_DIR=${WORK_DIR}/prereq
 doc_DIR=${WORK_DIR}/doc
@@ -29,6 +24,8 @@ run_DIR=${WORK_DIR}/run
 scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
+BLAST_DIR=/N/dc2/projects/brendelgroup/TRegGA/bin
+DB_REFDNA=OsjDNA # to replace DB_OsjCHR, which is defined by DB_${REFNAME}, where REFNAME=OsjCHR.
 DB_REFSEQ=OsjCHR
 OUTFMT="6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore gaps qcovs qcovhsp"
 EVALUE="1e-100"
@@ -42,6 +39,7 @@ NUM_THREADS=4
 # GAPEXTEND=1
 
 # blat
+BLAT_DIR=/N/soft/mason/blat/blat35/bin/x86_64
 PERC_IDENTITY=99
 MIN_SCORE=250
 GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
