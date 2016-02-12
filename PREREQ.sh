@@ -1,6 +1,17 @@
 #!/bin/bash
 source ./0SOURCE
 
+## Prerequisite data:
+# Run TRegGA workflow to obtain the soapdenovo2-assembled contigs (and scaffolds) of rice samples. Only contigs are used in the current workflow.
+# Retrieve the reference rice Japonica sequence and gff3 files.
+
+## Prerequisite software:
+# NCBI BLAST+
+# BLAT (The BLAST-Like Alignment Tool)
+# getTarget.py from TRegGA #with modification to retrieve fasta instead of embl
+# xgetseq from TRegGA #with modification to retrieve also individual chrs
+
+##--------------------------------------------
 # Setup sub-directory for workflow
 cd ${WORK_DIR}
 mkdir -p ${WORK_DIR}/prereq
@@ -11,13 +22,14 @@ mkdir -p ${WORK_DIR}/data
 mkdir -p ${WORK_DIR}/run
 mkdir -p ${WORK_DIR}/scratch
 
-# Preparation for the sample reads with TRegGA
-# Note that reads have been trimmed and quality filtered with TRegGA previously, and are just linked here.
+
+## Prepare for the SOAPdenovo2-assembled sample contigs and scaffolds using TRegGA workflow.
+# Note: here the contigs have been assembled previously, and we are just retrieving those contig files.
 cd ${prereq_DIR}
 for i in ${SAMPLE}
 do
-ln -s ${READ_DIR}/${i}/${i}_1.fq .
-ln -s ${READ_DIR}/${i}/${i}_2.fq .
+ln -s ${denovo_DIR}/${i}/${i}-soap.contig .
+makeblastdb -in ${i}-soap.contig -dbtype nucl -out DB_${i}_contig -parse_seqids
 done
 
 # Retrieve and index the reference genome
@@ -37,12 +49,6 @@ cd ${prereq_DIR}
 # Retrieve the reference sequence
 sh ${bin_DIR}/xgetseq
 
-# Index the reference genome for bwa
-bwa index ${REFSEQ}
-
-# Index the reference genome for Picard and GATK
-${SAMTOOLS_DIR}/samtools faidx ${REFSEQ}
-java -Xmx8g -jar ${PICARD_DIR}/CreateSequenceDictionary.jar REFERENCE=${REFSEQ} OUTPUT=${REFSEQNAME}.dict
 " > prereq-on-${REFSEQNAME}.qsub
 qsub prereq-on-${REFSEQNAME}.qsub
 
