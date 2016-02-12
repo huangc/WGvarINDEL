@@ -190,7 +190,7 @@ for indel in q t
 do
 cd ${run_DIR}
 mkdir -p ${indel}
-cd ${WGvarINDEL}/${indel}
+cd ${indel}
 
 for i in ${SAMPLE}
 do
@@ -246,7 +246,7 @@ awk '{ FS="\t"; print $1,$2,$3,$4,$5,$6,$8 }' | sort -k1.6 -n > tmp && \mv tmp i
 
 ##---------------------------
 #6. Use the summary indel table iloci.table (without geneID to avoid generating duplicates) to retrieve fasta sequences.
-\cp ${WORK_DIR}/bin/getTarget.py ${run_DIR}/${indel}/.
+\cp ${bin_DIR}/getTarget.py ${run_DIR}/${indel}/.
 \cp iloci.table ILOCI.LIST
 \cp iloci.table Seq.${indel}_Lg${GAP_MINSIZE}.table
 echo "Tname tGapStart tGapSize Qname qGapStart qGapSize Samples" | cat - Seq.${indel}_Lg${GAP_MINSIZE}.table > tmp && \
