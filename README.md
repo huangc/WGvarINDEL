@@ -12,7 +12,6 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 6. Use the indel summary table to retrieve indel sequences.
 
-
 ## Execution description:
 1. Edit and setup the parameters as described in 0SOURCE, then `source 0SOURCE`
 2. Edit and prepare for the prerequisite files and softwares as described in PREREQ.sh, then `sh PREREQ.sh`
@@ -20,4 +19,7 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 4. Submit jobs on Mason: `sh x2-qsub`. 
 5. Cleanup files with `sh xcleanup`
 6. Find main outputs in ${WORK_DIR}/data.
+
+## Notes: 
+1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
 
