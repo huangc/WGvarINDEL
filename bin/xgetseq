@@ -39,6 +39,7 @@ blastdbcmd -db OsjDNA -entry OsjChr1,OsjChr2,OsjChr3,OsjChr4,OsjChr5,OsjChr6,Osj
 for i in {1..12}
 do
 blastdbcmd -db OsjDNA -entry OsjChr${i} | sed "s/^>lcl|/>/;" > OsjChr${i}.fa
+makeblastdb -in OsjChr${i}.fa -dbtype nucl -parse_seqids -out OsjChr${i}
 done
 
 #6. Retrieve the repeat-masked chromosome sequences:
