@@ -1,28 +1,28 @@
 ## General
+EMAIL=youremail@indiana.edu
+mason_UID=userID@mason.indiana.edu
 WORK_DIR=/your_home/your_workdir
-SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
+TRegGA_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1
+# REF_DIR=${TRegGA_DIR}/reference/rice_japonica
 REFSEQ=OsjCHR.fa
 REFGFF=OsjCHR.gff3
 REFNAME=OsjCHR
-mason_UID=userID@mason.indiana.edu
-TRegGA_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1
 denovo_DIR=${TRegGA_DIR}/assembly/denovo
 SEQ="soap.contig"
 SEQNAME="contig"
+SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
 
 ## Sub-directory for workflow
 prereq_DIR=${WORK_DIR}/prereq
 doc_DIR=${WORK_DIR}/doc
 bin_DIR=${WORK_DIR}/bin
 src_DIR=${WORK_DIR}/src
-run_DIR=${WORK_DIR}/run
 data_DIR=${WORK_DIR}/data
+run_DIR=${WORK_DIR}/run
 scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
 DB_REFSEQ=OsjCHR
-DB_ILOCUS=OsjLOCUS
-DB_PTALEN=OsjpTALEN
 OUTFMT="6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore gaps qcovs qcovhsp"
 EVALUE="1e-100"
 # PERC_IDENTITY=99
