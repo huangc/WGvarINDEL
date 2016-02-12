@@ -6,7 +6,7 @@ TRegGA_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1
 # REFSEQ=OsjCHR.fa
 REFSEQ=OsjChr10.fa
 REFGFF=OsjCHR.gff3
-# REFSEQNAME=OsjCHR # original REFNAME
+# REFSEQNAME=OsjCHR
 REFSEQNAME=OsjChr10
 denovo_DIR=${TRegGA_DIR}/assembly/denovo
 SEQ="soap.contig"
@@ -24,9 +24,13 @@ run_DIR=${WORK_DIR}/run
 scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
+# Blastdb name for reference Oryza_sativa.IRGSP-1.0.26.dna.genome.fa is OsjDNA
+# Blastdb name for OsjChr${i}.fa is OsjChr${i}
+# Blastdb name for ${i}-soap.contig: DB_${i}_contig
 BLAST_DIR=/N/dc2/projects/brendelgroup/TRegGA/bin
 DB_REFDNA=OsjDNA # to replace DB_OsjCHR, which is defined by DB_${REFNAME}, where REFNAME=OsjCHR.
 DB_REFSEQ=OsjCHR
+
 OUTFMT="6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore gaps qcovs qcovhsp"
 EVALUE="1e-100"
 # PERC_IDENTITY=99
