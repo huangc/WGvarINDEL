@@ -288,7 +288,7 @@ Samples=`cat rec.Samples`
 
 if [ ${indel} == "q" ]; then 
     query=`cat rec.Qname` 
-    ${BLAST_DIR}/blastdbcmd -db ${prereq_DIR}/DB_${i}_contig -entry "lcl|${query}" -dbtype nucl -outfmt "%f" -out ${i}-${query}.fa
+    blastdbcmd -db ${prereq_DIR}/DB_${i}_contig -entry "lcl|${query}" -dbtype nucl -outfmt "%f" -out ${i}-${query}.fa
     sed -i -e "s/>lcl|/>/" ${i}-${query}.fa
     python getTarget.py ${i}-${query}.fa ${i}-${query}_GAP_${qGapStart}_${qGapEnd} ${qGapStart} ${qGapEnd}
     sed -i "s/^>${query}/>${i}-${query}_GAP_${qGapStart}_${qGapEnd}/" ${i}-${query}_GAP_${qGapStart}_${qGapEnd}.fasta
