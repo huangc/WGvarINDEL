@@ -15,7 +15,7 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 ## Execution description:
 1. Edit and setup the parameters as described in 0SOURCE, then `source 0SOURCE`
 2. Edit and prepare for the prerequisite files and softwares as described in PREREQ.sh, then `sh PREREQ.sh`
-3. Submit qsub script on Mason: `sh x1-WGvarINDEL`
+3. Submit qsub script on Mason: `qsub x1-WGvarINDEL`
 4. Cleanup files with `sh xcleanup`
 5. Find main outputs in ${WORK_DIR}/data.
 
