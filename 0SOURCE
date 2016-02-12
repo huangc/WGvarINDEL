@@ -1,6 +1,5 @@
 ## General
 EMAIL=youremail@indiana.edu
-mason_UID=userID@mason.indiana.edu
 WORK_DIR=/your_home/your_workdir
 TRegGA_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1
 # REF_DIR=${TRegGA_DIR}/reference/rice_japonica
@@ -10,7 +9,13 @@ REFNAME=OsjCHR
 denovo_DIR=${TRegGA_DIR}/assembly/denovo
 SEQ="soap.contig"
 SEQNAME="contig"
-SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
+# SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
+SAMPLE=ZHENGSHAN97test
+
+DB_REFDNA=OsjDNA # to replace DB_OsjCHR, which is defined by DB_${REFNAME}, where REFNAME=OsjCHR.
+DB_REFSEQ=OsjCHR
+BLAST_DIR=
+BLAT_DIR=
 
 ## Sub-directory for workflow
 prereq_DIR=${WORK_DIR}/prereq
