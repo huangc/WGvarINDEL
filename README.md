@@ -22,4 +22,4 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 
 ## Notes: 
 1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
-
+2. Make sure blast+ is in your PATH: /N/dc2/projects/brendelgroup/TRegGA/bin
