@@ -12,13 +12,20 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 6. Use the indel summary table to retrieve indel sequences.
 
-## Execution description:
+## Workflow execution:
 1. Edit and setup the parameters as described in 0SOURCE, then `source 0SOURCE`
 2. Edit and prepare for the prerequisite files and softwares as described in PREREQ.sh, then `sh PREREQ.sh`
 3. Submit qsub script for blat alignment on Mason: `qsub x1-WGblat`
 4. Submit qsub script for indel analysis on Mason: `qsub x2-WGvarINDEL`
 5. Find main outputs in ${WORK_DIR}/data.
 6. Cleanup files with `sh xcleanup`
+
+## Sub-directories for workflow implementation and data retrieval:
+1. *prereq/*: prerequisite inputs such as retrieval and storage of TRegGA assembled contigs; retrieval and storage of reference genomes, preparation of BLAST+ database for reference genome.
+2. *doc/*: reference and tutorial documents.
+3. *bin/*: ancillary codes and scripts.
+4. *run/*: main scripts and execution results.
+5. *data/*: final outputs and reports.
 
 ## Notes: 
 1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
