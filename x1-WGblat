@@ -27,12 +27,16 @@ cd ${run_DIR}
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
 
+# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica is about 100 hrs on Mason. 
+# WALLTIME=120
+WALLTIME=24
+
 for i in ${SAMPLE}
 do
 echo "
 #!/bin/bash
 #PBS -m abe
-#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=24:00:00
+#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=${WALLTIME}:00:00
 #PBS -M ${EMAIL}
 #PBS -N x1-WGblat
 #PBS -j oe
