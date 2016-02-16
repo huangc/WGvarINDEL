@@ -14,6 +14,13 @@ SEQNAME="contig"
 # SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
 SAMPLE=ZHENGSHAN97test
 
+## qsub parameters for job running on Mason 
+# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
+# WALLTIME=120
+WALLTIME=24
+PPN=16
+VMEM=40
+
 ## Sub-directory for workflow
 prereq_DIR=${WORK_DIR}/prereq
 doc_DIR=${WORK_DIR}/doc
