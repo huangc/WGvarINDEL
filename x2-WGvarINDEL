@@ -36,15 +36,15 @@ cd ${run_DIR}
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
 
-for i in ${SAMPLE}
-do
-QUERY=${i}-${SEQ}
-QUERYNAME=${i}.${SEQNAME}
-blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
-${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY} blat.${DB_REFSEQ}.${QUERYNAME}.psl
-pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psr
+# for i in ${SAMPLE}
+# do
+# QUERY=${i}-${SEQ}
+# QUERYNAME=${i}.${SEQNAME}
+# blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
+# ${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY} blat.${DB_REFSEQ}.${QUERYNAME}.psl
+# pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psr
 
-done
+# done
 
 #-----
 #2. Generate filtered blat hits table for contigs that contain gaps whose total length larger than the defined size (GAP_MINSIZE=100 bp).
