@@ -12,6 +12,7 @@ cd ${run_DIR}
 for indel in q t
 do
 cd ${run_DIR}/${indel}
+\rm -r rec*
 mkdir -p ${run_DIR}/${indel}/file_sample
 mv *.sample ${run_DIR}/${indel}/file_sample
 
