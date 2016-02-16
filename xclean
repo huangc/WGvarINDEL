@@ -1,5 +1,5 @@
-#!/usr/bin/bash
-source 0SOURCE
+#!/bin/bash
+source ./0SOURCE
 cd ${WORK_DIR}
 
 ## Clean up the intermediate files
