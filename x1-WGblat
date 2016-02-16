@@ -27,7 +27,7 @@ cd ${run_DIR}
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
 
-# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90 hrs on Mason. Plan carefully for submitting the job. 
+# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
 # WALLTIME=120
 WALLTIME=24
 
