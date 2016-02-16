@@ -6,6 +6,7 @@ cd ${WORK_DIR}
 cd ${run_DIR}
 \rm -r *.Reps.psr
 \rm -r *.Reps.psl.tailer*
+\rm -r rec*
 
 ## clean up *.sample, *.fasta and *.fa files
 for indel in q t
