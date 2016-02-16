@@ -20,7 +20,7 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 5. Find main outputs in *data/*.
 6. Cleanup files with `sh xcleanup`
 
-## Sub-directories for workflow implementation and data retrieval:
+## Sub-directories for workflow implementation:
 1. *prereq/*: prerequisite inputs such as retrieval and storage of TRegGA assembled contigs; retrieval and storage of reference genomes, preparation of BLAST+ database for reference genome.
 2. *doc/*: reference and tutorial documents.
 3. *bin/*: ancillary codes and scripts.
