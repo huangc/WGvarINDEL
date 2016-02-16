@@ -295,7 +295,7 @@ if [ ${indel} == "q" ]; then
     cat ${i}-${query}_GAP_${qGapStart}_${qGapEnd}.fasta >> Seq.${indel}_Lg${GAP_MINSIZE}_${i}.fasta
 elif [ ${indel} == "t" ]; then 
     query=`cat rec.Tname` 
-    python getTarget.py ${prereq_DIR}/Osj${query}.fa ${i}-${query}_GAP_${tGapStart}_${tGapEnd} ${tGapStart} ${tGapEnd}
+    python getTarget.py ${prereq_DIR}/${query}.fa ${i}-${query}_GAP_${tGapStart}_${tGapEnd} ${tGapStart} ${tGapEnd}
     sed -i "s/^>${query}/>${i}-${query}_GAP_${tGapStart}_${tGapEnd}/" ${i}-${query}_GAP_${tGapStart}_${tGapEnd}.fasta
     cat ${i}-${query}_GAP_${tGapStart}_${tGapEnd}.fasta >> Seq.${indel}_Lg${GAP_MINSIZE}_${i}.fasta
 else 
