@@ -8,8 +8,6 @@ source ./0SOURCE
 ## Prerequisite software:
 # NCBI BLAST+
 # blat/35 (The BLAST-Like Alignment Tool)
-# bin/getTarget.py
-# bin/xgetseq
 
 ##--------------------------------------------
 # Setup sub-directory for workflow
