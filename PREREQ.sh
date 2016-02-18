@@ -8,8 +8,8 @@ source ./0SOURCE
 ## Prerequisite software:
 # NCBI BLAST+
 # blat/35 (The BLAST-Like Alignment Tool)
-# getTarget.py from TRegGA with modification to retrieve fasta instead of embl
-# xgetseq from TRegGA with modification to retrieve also individual chrs
+# bin/getTarget.py from TRegGA with modification to retrieve fasta instead of embl
+# bin/xgetseq from TRegGA with modification to retrieve also individual chrs
 
 ##--------------------------------------------
 # Setup sub-directory for workflow
