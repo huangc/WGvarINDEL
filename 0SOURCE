@@ -1,18 +1,25 @@
 ## General
 EMAIL=youremail@indiana.edu
 WORK_DIR=/your_home/your_workdir
-TRegGA_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1
-# REF_DIR=${TRegGA_DIR}/reference/rice_japonica
+
+# REFSEQ is the fasta file for reference genome, retrieved by bin/xgetseq, and located in prereq/. 
 # REFSEQ=OsjCHR.fa
 REFSEQ=OsjChr10.fa
-REFGFF=OsjCHR.gff3
+# REFSEQNAME is the file name for REFSEQ without file extension.
 # REFSEQNAME=OsjCHR
 REFSEQNAME=OsjChr10
-denovo_DIR=${TRegGA_DIR}/assembly/denovo
+# REFGFF is the gene annotation gff3 file for REFSEQ, retrieved by bin/xgetseq, and located in prereq/.
+REFGFF=OsjCHR.gff3
+
+# SAMPLE is a list of sample names. Each sample name should be only one word.
+# SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
+SAMPLE="ZHENGSHAN97test"
+# denovo_DIR is the directory that stores the denovo-assembled contigs.
+denovo_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo
+# In order for the workflow to parse the contigs correctly, 
+# the contig files should be stored and named as ${denovo_DIR}/${SAMPLE}/${SAMPLE}-SOAP/${SAMPLE}-soap.contig
 SEQ="soap.contig"
 SEQNAME="contig"
-# SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
-SAMPLE=ZHENGSHAN97test
 
 ## qsub parameters for x1-WGblat job running on Mason 
 # The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
