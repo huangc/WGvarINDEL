@@ -24,8 +24,9 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 1. *prereq/*: prerequisite inputs such as retrieval and storage of TRegGA assembled contigs; retrieval and storage of reference genomes, preparation of BLAST+ database for reference genome.
 2. *doc/*: reference and tutorial documents.
 3. *bin/*: ancillary codes and scripts.
-4. *run/*: main scripts and execution results.
-5. *data/*: final outputs and reports.
+4. *src/*: prerequisite softwares
+5. *run/*: main scripts and execution results.
+6. *data/*: final outputs and reports.
 
 ## Notes: 
 1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
