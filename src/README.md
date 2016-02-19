@@ -8,13 +8,10 @@ In the case on the IU Mason cluster, the prerequisite softwares can be loaded fr
 - module add blat
 
 ### Blat
-See http://bio-bwa.sourceforge.net.
-Last update: December 3, 2015.
+See https://genome.ucsc.edu/FAQ/FAQblat.html
+Last update: February 18, 2016.
 ```bash
 cd ${src_DIR}
-wget https://github.com/lh3/bwa/archive/0.7.12.tar.gz
-tar -xzf 0.7.12.tar.gz
-cd bwa-0.7.12/
-make
-cp bwa ${bin_DIR}
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat
+chmod u+x blat
 ```
