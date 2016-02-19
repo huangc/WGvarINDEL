@@ -1,4 +1,4 @@
-src/* directory contains prerequisite softwares:
+## *src/* directory contains prerequisite softwares:
 - blat
 - blast+
 
