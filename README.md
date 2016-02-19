@@ -31,5 +31,3 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 ## Notes: 
 1. The workflow default to run a test case using 10% contigs from rice cultivar Zhengshan97 against reference rice Japponica Chr10. 
 2. The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason, so plan carefully for submitting the job `x1-WGblat`.
-3. Make sure blast+ is in the PATH: /N/dc2/projects/brendelgroup/TRegGA/bin
-
