@@ -8,7 +8,7 @@ In the case on the IU Mason cluster, the prerequisite softwares can be loaded fr
 - module add blat
 
 ### Blat
-See https://genome.ucsc.edu/FAQ/FAQblat.html,
+See https://genome.ucsc.edu/FAQ/FAQblat.html.
 Last update: April 18, 2012
 ```bash
 cd ${src_DIR}
@@ -19,7 +19,7 @@ unzip blatSuite.34.zip
 ```
 
 ### BLAST
-See https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download,
+See https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download.
 Last update:    March 8, 2015
 ```bash
 cd ${src_DIR}
