@@ -38,11 +38,6 @@ run_DIR=${WORK_DIR}/run
 scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
-# Blastdb name for reference Oryza_sativa.IRGSP-1.0.26.dna.genome.fa is OsjDNA
-# Blastdb name for OsjChr10.fa is OsjChr10
-# Blastdb name for ${i}-soap.contig: DB_${i}_contig
-BLAST_DIR=/N/dc2/projects/brendelgroup/TRegGA/bin
-DB_REFDNA=OsjDNA # to replace DB_OsjCHR, which is defined by DB_${REFNAME}, where REFNAME=OsjCHR.
 # DB_REFSEQ=OsjCHR
 DB_REFSEQ=OsjChr10
 
@@ -58,7 +53,7 @@ NUM_THREADS=4
 # GAPEXTEND=1
 
 # blat
-BLAT_DIR=/N/soft/mason/blat/blat35/bin/x86_64
+# BLAT_DIR=/N/soft/mason/blat/blat35/bin/x86_64
 PERC_IDENTITY=99
 MIN_SCORE=250
 GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
