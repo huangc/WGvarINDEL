@@ -40,6 +40,7 @@ scratch_DIR=${WORK_DIR}/scratch
 ## blastn
 # Add blast+ directory to the PATH
 export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
+# export PATH=$PATH:${src_DIR}/blast//ncbi-blast-2.3.0+/bin
 # DB_REFDNA is the BlastDB name for reference whole genome.
 DB_REFDNA=OsjDNA
 # DB_REFSEQ is the BlastDB name for reference targeted region, such as individual chromosome OsjChr10
@@ -57,6 +58,8 @@ NUM_THREADS=4
 # GAPEXTEND=1
 
 # blat
+# Add blat directory to the PATH
+# export PATH=$PATH:${src_DIR}/blatSuite
 PERC_IDENTITY=99
 MIN_SCORE=250
 GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
