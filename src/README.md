@@ -8,23 +8,25 @@ In the case on the IU Mason cluster, the prerequisite softwares can be loaded fr
 - module add blat/35
 
 ### Blat
-See https://genome.ucsc.edu/FAQ/FAQblat.html.
-Last update: December 11, 2014
+* See https://genome.ucsc.edu/FAQ/FAQblat.html.
+* Last update: Dec. 2014
 ```bash
 cd ${src_DIR}
 mkdir blatSuite
 cd blatSuite
 wget http://hgwdev.cse.ucsc.edu/~kent/exe/linux/blatSuite.zip
 unzip blatSuite.zip
+export PATH=$PATH:${src_DIR}/blatSuite
 ```
 
 ### BLAST
-See https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download.
-Last update: December 21, 2015
+* See https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download.
+* Last update: Dec. 2015
 ```bash
 cd ${src_DIR}
 mkdir blast
 cd blast
 wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.3.0/ncbi-blast-2.3.0+-x64-linux.tar.gz
 tar -xzf ncbi-blast-2.3.0+-x64-linux.tar.gz
+export PATH=$PATH:${src_DIR}/blast//ncbi-blast-2.3.0+/bin
 ```
