@@ -38,6 +38,8 @@ run_DIR=${WORK_DIR}/run
 scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
+# Add blast+ directory to the PATH
+export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
 # DB_REFSEQ=OsjCHR
 DB_REFSEQ=OsjChr10
 
