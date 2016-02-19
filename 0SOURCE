@@ -40,9 +40,10 @@ scratch_DIR=${WORK_DIR}/scratch
 ## blastn
 # Add blast+ directory to the PATH
 export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
-# DB_REFSEQ=OsjCHR
+# DB_REFDNA is the BlastDB name for reference whole genome.
+DB_REFDNA=OsjDNA
+# DB_REFSEQ is the BlastDB name for reference targeted region, such as individual chromosome OsjChr10
 DB_REFSEQ=OsjChr10
-
 OUTFMT="6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore gaps qcovs qcovhsp"
 EVALUE="1e-100"
 # PERC_IDENTITY=99
@@ -55,7 +56,6 @@ NUM_THREADS=4
 # GAPEXTEND=1
 
 # blat
-# BLAT_DIR=/N/soft/mason/blat/blat35/bin/x86_64
 PERC_IDENTITY=99
 MIN_SCORE=250
 GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
