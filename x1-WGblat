@@ -16,7 +16,6 @@
 
 cd $PBS_O_WORKDIR
 source ./0SOURCE
-cd ${run_DIR}
 
 #-----
 #1. Blat of sample contigs (by SOAP-denovo assembly) against WG reference.
