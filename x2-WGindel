@@ -22,6 +22,7 @@ module add blat
 #5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 #6. Use the indel summary table to retrieve indel sequences.
 
+cd $PBS_O_WORKDIR
 source ./0SOURCE
 cd ${run_DIR}
 
