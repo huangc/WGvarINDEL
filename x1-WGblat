@@ -22,9 +22,9 @@ cd ${run_DIR}
 # psl header is below. rep_match is Number of matching bases that are part of repeats. \
 # Q is for Query, T is for Target, or Sample/Reference in Blastn.
 # block_count is Number of blocks in the alignment. blockSizes is Comma-separated list of sizes of each block.
-# match(#1), mis-match(#2), rep_match(#3), nCount(#4), Q_gap_count(#5), Q_gap_bases(#6), T_gap_count(#7), T_gap_bases(#8), strand(#9), Q_nam\
-e(#10), Q_size(#11), Q_start(#12), Q_end(#13), T_name(#14), T_size(#15), T_start(#16), T_end(#17), block_count(#18), blockSizes(#19), qStart\
-s(#20), tStarts(#21).
+# match(#1), mis-match(#2), rep_match(#3), nCount(#4), Q_gap_count(#5), Q_gap_bases(#6), T_gap_count(#7), T_gap_bases(#8), 
+# strand(#9), Q_name(#10), Q_size(#11), Q_start(#12), Q_end(#13), T_name(#14), T_size(#15), T_start(#16), T_end(#17), 
+# block_count(#18), blockSizes(#19), qStarts(#20), tStarts(#21).
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
 
