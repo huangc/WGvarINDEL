@@ -13,7 +13,7 @@ REFGFF=OsjCHR.gff3
 
 # SAMPLE is a list of sample names. Each sample name should be only one word.
 # SAMPLE="YB1 YB2 YB3 YB4 YB5 YB6 YB7 YB8"
-SAMPLE="ZHENGSHAN97test"
+SAMPLE="ZHENGSHAN97test ZHENGSHAN97test2"
 # denovo_DIR is the directory that stores the denovo-assembled contigs.
 denovo_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo
 # In order for the workflow to parse the contigs correctly, 
