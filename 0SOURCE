@@ -57,7 +57,7 @@ NUM_THREADS=4
 # GAPOPEN=4
 # GAPEXTEND=1
 
-# blat
+## blat
 # Add blat directory to the PATH
 # export PATH=$PATH:${src_DIR}/blatSuite
 PERC_IDENTITY=99
