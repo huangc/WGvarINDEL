@@ -2,6 +2,9 @@
 source ./0SOURCE
 cd ${WORK_DIR}
 
+## Clean up the qsub error message files
+mv *.o* scratch/
+ 
 ## Clean up the intermediate files
 cd ${run_DIR}
 \rm -r *.Reps.psr
@@ -21,6 +24,7 @@ mv *.fa ${run_DIR}/${indel}/file_contig
 
 mkdir -p ${run_DIR}/${indel}/file_gap
 mv *_GAP_*.fasta ${run_DIR}/${indel}/file_gap
+
 
 done
 
