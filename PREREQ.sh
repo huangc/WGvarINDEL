@@ -20,8 +20,8 @@ mkdir -p ${WORK_DIR}/data
 mkdir -p ${WORK_DIR}/run
 mkdir -p ${WORK_DIR}/scratch
 
-## Prepare for the SOAPdenovo2-assembled sample contigs and scaffolds using TRegGA workflow.
-# Note: the contigs have been assembled previously, and we are just retrieving those contig files.
+## Prepare for the SOAPdenovo2-assembled sample contigs.
+# Note: the contigs have been assembled previously using TRegGA workflow, and we are just linking those contig files here.
 cd ${prereq_DIR}
 for i in ${SAMPLE}
 do
