@@ -30,13 +30,6 @@ denovo_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo
 SEQ="soap.contig"
 SEQNAME="contig"
 
-## qsub parameters for x1-WGblat job running on Mason 
-# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
-# WALLTIME=120
-WALLTIME=24
-PPN=16
-VMEM=40
-
 ## blastn
 # Add blast+ directory to the PATH
 export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
@@ -64,3 +57,11 @@ PERC_IDENTITY=99
 MIN_SCORE=250
 GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
 GAP_MINSIZE=100 #Minimal size of total gaps, more than and not including this number.
+
+## qsub parameters for x1-WGblat job running on Mason 
+# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
+# WALLTIME=120
+WALLTIME=24
+PPN=16
+VMEM=40
+
