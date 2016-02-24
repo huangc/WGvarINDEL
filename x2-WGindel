@@ -199,7 +199,7 @@ do
 cd ${run_DIR}
 mkdir -p ${indel}
 cd ${indel}
-
+\rm -r *.sample
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
