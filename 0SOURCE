@@ -2,6 +2,15 @@
 EMAIL=youremail@indiana.edu
 WORK_DIR=/your_home/your_workdir
 
+## Sub-directory for workflow
+prereq_DIR=${WORK_DIR}/prereq
+doc_DIR=${WORK_DIR}/doc
+bin_DIR=${WORK_DIR}/bin
+src_DIR=${WORK_DIR}/src
+data_DIR=${WORK_DIR}/data
+run_DIR=${WORK_DIR}/run
+scratch_DIR=${WORK_DIR}/scratch
+
 # REFSEQ is the fasta file for reference genome, retrieved by bin/xgetseq, and located in prereq/. 
 # REFSEQ=OsjCHR.fa
 REFSEQ=OsjChr10.fa
@@ -27,15 +36,6 @@ SEQNAME="contig"
 WALLTIME=24
 PPN=16
 VMEM=40
-
-## Sub-directory for workflow
-prereq_DIR=${WORK_DIR}/prereq
-doc_DIR=${WORK_DIR}/doc
-bin_DIR=${WORK_DIR}/bin
-src_DIR=${WORK_DIR}/src
-data_DIR=${WORK_DIR}/data
-run_DIR=${WORK_DIR}/run
-scratch_DIR=${WORK_DIR}/scratch
 
 ## blastn
 # Add blast+ directory to the PATH
