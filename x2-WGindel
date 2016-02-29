@@ -11,39 +11,9 @@ module add blat
 # Author: Chun-Yuan Huang, Ph.D.
 # Last Update: 2/12/2016
 
-##-------------------------------------------
-## Workflow description:
-#1. Blat of sample contigs (by SOAP-denovo assembly) against WG reference.
-#2. Generate filtered blat hits table for contigs that contain gaps whose total length
-#   larger than the defined size (e.g. GAP_MINSIZE=100, defined in the source file).
-#3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info
-#   from the Blat result, where Q is for Query (the samples) and T is for Target (the reference genome)
-#4. Generate indel tables for each insertion and deletion.
-#5. Make indel summary table that combines same indels from all samples in each row based on the indel features
-#6. Use the indel summary table to retrieve indel sequences.
-
 cd $PBS_O_WORKDIR
 source ./0SOURCE
 cd ${run_DIR}
-
-#-----
-#1. Blat of sample contigs (by SOAP-denovo assembly) against WG reference.
-# psl header is below. rep_match is Number of matching bases that are part of repeats. \
-# Q is for Query, T is for Target, or Sample/Reference in Blastn.
-# block_count is Number of blocks in the alignment. blockSizes is Comma-separated list of sizes of each block.
-# match(#1), mis-match(#2), rep_match(#3), nCount(#4), Q_gap_count(#5), Q_gap_bases(#6), T_gap_count(#7), T_gap_bases(#8), strand(#9), Q_name(#10), Q_size(#11), Q_start(#12), Q_end(#13), T_name(#14), T_size(#15), T_start(#16), T_end(#17), block_count(#18), blockSizes(#19), qStarts(#20), tStarts(#21).
-# psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
-# psl can be further simplified to the best representatives using pslReps
-
-# for i in ${SAMPLE}
-# do
-# QUERY=${i}-${SEQ}
-# QUERYNAME=${i}.${SEQNAME}
-# blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
-# ${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY} blat.${DB_REFSEQ}.${QUERYNAME}.psl
-# pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psr
-
-# done
 
 #-----
 #2. Generate filtered blat hits table for contigs that contain gaps whose total length larger than the defined size (GAP_MINSIZE=100 bp).
@@ -52,22 +22,13 @@ for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl > blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer
-awk -v gap_minnum="${GAP_MINNUM}" -v gap_minsize="${GAP_MINSIZE}" '{ OFS="\t"; if ( $5 > gap_minnum && $6 > gap_minsize ) print $0 }'\
- blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer > blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer.Q.awk
-awk -v gap_minnum="${GAP_MINNUM}" -v gap_minsize="${GAP_MINSIZE}" '{ OFS="\t"; if ( $7 > gap_minnum && $8 > gap_minsize ) print $0 }'\
- blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer > blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer.T.awk
-cat blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer.Q.awk blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.tailer.T.awk | sort -k14,14 \
- > blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.awk
-
-echo "match mis-match rep_match nCount Q_gap_count Q_gap_bases T_gap_count T_gap_bases \
-strand Q_name Q_size Q_start Q_end T_name T_size T_start T_end \
-block_count blockSizes qStarts tStarts" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.awk \
-> tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.awk
+tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl |\
+awk -v gap_minnum="${GAP_MINNUM}" '{ OFS="\t"; if ( $5 >= gap_minnum || $7 >= gap_minnum ) print $0 }'\
+ > blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
 done
 
 #-----
-#3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info from the Blat result, which are to be compared across all samples
+#3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info from the Blat result.
 #
 # make a table with these info:
 # Q_name(#10), T_name(#14), Q_gap_count(#5), Q_gap_bases(#6), T_gap_count(#7), T_gap_bases(#8),
@@ -78,10 +39,11 @@ for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-awk '{ print $10,$14,$5,$6,$7,$8,$11,$12,$13,$15,$16,$17,$18,$19,$20,$21 }' blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl.awk\
- | sort -k 2.6 -n -t " " > blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.1
-head -1 blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.1 > blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.2
-tail -n +2 blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.1 > blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.3
+awk '{ print $10,$14,$5,$6,$7,$8,$11,$12,$13,$15,$16,$17,$18,$19,$20,$21 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps\
+ | sort -k 2 -t " " > tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
+echo "Q_name T_name Q_gap_count Q_gap_bases T_gap_count T_gap_bases \
+Q_size Q_start Q_end T_size T_start T_end block_count blockSizes qStarts tStarts" |\
+cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps > blat.${DB_REFSEQ}.${QUERYNAME}.psl.Gaps
 done
 
 # 
@@ -89,11 +51,11 @@ for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-\rm blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap
-len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.3`
+\rm blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
+len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps`
 for ((k=1; k<=$len; k++))
 do
-head -$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.3 | tail -1 > rec
+head -$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps | tail -1 > rec
 cut -d " " -f1 rec > rec.Qname
 cut -d " " -f2 rec > rec.Tname
 cut -d " " -f3 rec > rec.QgapCount
@@ -151,7 +113,7 @@ tGapEnd=$tStartNext
 echo "$Qname $Tname $QgapCount $QgapBases $TgapCount $TgapBases $blockCount $qStart $qEnd $qGapSize $qStartNext $qEndNext $tStart $tEnd $tGapSize $tStartNext $tEndNext" >> rec.perGap
 done
 
-cat rec.perGap >> blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap
+cat rec.perGap >> blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
 
 done
 done
@@ -178,13 +140,11 @@ do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
 
-awk -v gap_minnum="${GAP_MINNUM}" -v gap_minsize="${GAP_MINSIZE}" '{ OFS="\t"; if ( $5 > gap_minnum && $15 > gap_minsize ) print $0 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap | sort -t " " -k2.6 -n | uniq > blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.t
-echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.t \
-> tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.T
+awk -v gap_minsize="${GAP_MINSIZE}" -v gap_maxsize="${GAP_MAXSIZE}" '{ OFS="\t"; if ( $15 >= gap_minsize && $15 <= gap_maxsize ) print $0 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap | sort -t " " -k2 | uniq > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.t
+echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.t > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.T
 
-awk -v gap_minnum="${GAP_MINNUM}" -v gap_minsize="${GAP_MINSIZE}" '{ OFS="\t"; if ( $3 > gap_minnum && $10 > gap_minsize ) print $0 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap | sort -t " " -k2.6 -n | uniq > blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.q
-echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.q \
-> tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.Q
+awk -v gap_minsize="${GAP_MINSIZE}" -v gap_maxsize="${GAP_MAXSIZE}" '{ OFS="\t"; if ( $10 >= gap_minsize && $10 <= gap_maxsize ) print $0 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap | sort -t " " -k2 | uniq > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.q
+echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.q > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.Q
 
 done
 
