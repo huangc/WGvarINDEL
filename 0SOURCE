@@ -34,9 +34,9 @@ SEQNAME="contig"
 # Add blast+ directory to the PATH
 export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
 # export PATH=$PATH:${src_DIR}/blast/ncbi-blast-2.3.0+/bin
-# DB_REFSEQ is the BlastDB name for the reference sequence. 
-# Use OsjDNA for the whole genome
-DB_REFSEQ=OsjDNA
+# DB_REFSEQ is the BlastDB name for the reference sequence.
+# Use OsjCHR for the whole genome
+DB_REFSEQ=OsjCHR
 # Use individual chromosome such as OsjChr10 for target region.
 # DB_REFSEQ=OsjChr10
 # OUTFMT is the tabular output format for BlastDB query
@@ -56,11 +56,15 @@ NUM_THREADS=4
 # export PATH=$PATH:${src_DIR}/blatSuite
 PERC_IDENTITY=99
 MIN_SCORE=250
-GAP_MINNUM=0 #Minimal number of gaps, more than and not including this number.
-GAP_MINSIZE=100 #Minimal size of total gaps, more than and not including this number.
+
+## filtering the blat indel results 
+GAP_MINNUM=1 #Minimal number of gaps, more than and including this number.
+GAP_MINSIZE=5 #Minimal gap size in bp, more than and including this number.
+GAP_MAXSIZE=5000 #Maximal gap size in bp, less than and including this number.
 
 ## qsub parameters for x1-WGblat job running on Mason 
-# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
+# The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica
+# takes about 90-100 hrs on Mason. Plan carefully for submitting the job. 
 # WALLTIME=120
 WALLTIME=24
 PPN=16
