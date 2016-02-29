@@ -60,7 +60,7 @@ MIN_SCORE=250
 ## filtering the blat indel results 
 GAP_MINNUM=1 #Minimal number of gaps, more than and including this number.
 GAP_MINSIZE=5 #Minimal gap size in bp, more than and including this number.
-GAP_MAXSIZE=5000 #Maximal gap size in bp, less than and including this number.
+GAP_MAXSIZE=5000000 #Maximal gap size in bp, less than and including this number. Set to 5000000 as if no limit.
 
 ## qsub parameters for x1-WGblat job running on Mason 
 # The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica
