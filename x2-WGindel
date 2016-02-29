@@ -164,12 +164,12 @@ for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-cp ${run_DIR}/blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.${indel} .
+cp ${run_DIR}/blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.${indel} .
 
-len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.${indel}`
+len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.${indel}`
 for ((k=1; k<=$len; k++))
 do
-head -$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.awk.perGap.${indel} | tail -1 > rec
+head -$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.${indel} | tail -1 > rec
 
 cut -d " " -f1 rec > rec.Qname
 cut -d " " -f2 rec > rec.Tname
