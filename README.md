@@ -8,7 +8,7 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 1. Blat of sample contigs (by SOAP-denovo assembly) against WG reference.
 2. Generate filtered blat hits table for contigs that contain gaps whose total length larger than the defined size.
 3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info from the Blat result, where Q is for Query (the samples) and T is for Target (the reference genome)
-4. Generate indel tables for each insertion and deletion.
+4. Generate indel summary tables for each insertion and deletion.
 5. Use the indel summary table to retrieve indel sequences.
 
 ## Workflow execution:
