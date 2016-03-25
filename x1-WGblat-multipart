@@ -43,14 +43,14 @@ module add python
 module add blat
 
 cd ${prereq_DIR}
-${bin_DIR}/sample-split.sh ${QUERY} ${PARTS}
+gt splitfasta -targetsize ${PARTS} ${QUERY}
 
 # run blat of sample parts in parallel
 cd ${run_DIR}
-for ((k=0; k<${PARTS}; k++))
+for ((k=1; k<=${PARTS}; k++))
 do
 blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
-${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.part${k} blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.psl &
+${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.${k} blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl &
 done
 
 # wait until all blat processes are done
@@ -59,13 +59,13 @@ wait
 # generate the representative psl
 cd ${run_DIR}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
-for ((k=0; k<${PARTS}; k++))
+for ((k=1; k<=${PARTS}; k++))
 do
-pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.psl blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psl \
-blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psr
+pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl \
+blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psr
 
 # recombine all parts back into one file
-cat blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psl >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
+cat blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 done
 
 " > WGblat_${i}-on-${REFSEQNAME}.qsub
