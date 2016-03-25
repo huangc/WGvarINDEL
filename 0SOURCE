@@ -30,6 +30,10 @@ denovo_DIR=/N/dc2/projects/brendelgroup/TRegGA/TRegGA_v1/assembly/denovo
 SEQ="soap.contig"
 SEQNAME="contig"
 
+# To speed up blat, split samples into smaller parts and run blat in parallel
+# PARTS is the number of parts for sample splitting.
+PARTS=5
+
 ## blastn
 # Add blast+ directory to the PATH
 export PATH=$PATH:/N/dc2/projects/brendelgroup/TRegGA/bin
