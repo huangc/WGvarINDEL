@@ -27,24 +27,28 @@ source ./0SOURCE
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
 
-cd ${prereq_DIR}
+
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
+echo "
+#!/bin/bash
+#PBS -m abe
+#PBS -l nodes=1:ppn=${PPN},vmem=${VMEM}gb,walltime=${WALLTIME}:00:00
+#PBS -M ${EMAIL}
+#PBS -N x1-WGblat
+#PBS -j oe
+module add python
+module add blat
+
+cd ${prereq_DIR}
 ${bin_DIR}/sample-split.sh ${QUERY} ${PARTS}
-done
 
 # run blat of sample parts in parallel
 cd ${run_DIR}
-for i in ${SAMPLE}
-do
-QUERY=${i}-${SEQ}
-QUERYNAME=${i}.${SEQNAME}
-
 for ((k=0; k<${PARTS}; k++))
 do
-cd ${run_DIR}
 blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
 ${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.part${k} blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.psl &
 done
@@ -54,12 +58,7 @@ wait
 
 # generate the representative psl
 cd ${run_DIR}
-for i in ${SAMPLE}
-do
-QUERY=${i}-${SEQ}
-QUERYNAME=${i}.${SEQNAME}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
-
 for ((k=0; k<${PARTS}; k++))
 do
 pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.psl blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psl \
@@ -67,7 +66,10 @@ blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psr
 
 # recombine all parts back into one file
 cat blat.${DB_REFSEQ}.${QUERYNAME}.part${k}.Reps.psl >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
-
 done
+
+" > WGblat_${i}-on-${REFSEQNAME}.qsub
+qsub WGblat_${i}-on-${REFSEQNAME}.qsub
+
 done
 
