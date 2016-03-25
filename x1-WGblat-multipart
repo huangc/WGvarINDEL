@@ -43,7 +43,7 @@ module add python
 module add blat
 
 cd ${prereq_DIR}
-gt splitfasta -targetsize ${PARTS} ${QUERY}
+gt splitfasta -numfiles ${PARTS} ${QUERY}
 
 # run blat of sample parts in parallel
 cd ${run_DIR}
