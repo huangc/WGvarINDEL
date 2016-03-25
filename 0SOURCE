@@ -1,6 +1,6 @@
 ## General
 EMAIL=youremail@indiana.edu
-WORK_DIR=/your_home/your_workdir
+WORK_DIR=`pwd`
 
 ## Sub-directory for workflow
 prereq_DIR=${WORK_DIR}/prereq
