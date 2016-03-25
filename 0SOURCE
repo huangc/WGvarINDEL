@@ -32,7 +32,7 @@ SEQNAME="contig"
 
 # To speed up blat, split samples into smaller parts and run blat in parallel
 # PARTS is the number of parts for sample splitting.
-PARTS=5
+PARTS=6
 
 ## blastn
 # Add blast+ directory to the PATH
