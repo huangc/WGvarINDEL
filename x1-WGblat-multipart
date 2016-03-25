@@ -32,7 +32,7 @@ for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-${bin_DIR}/SAMPLE-split.sh ${QUERY} ${PARTS}
+${bin_DIR}/sample-split.sh ${QUERY} ${PARTS}
 done
 
 # run blat of sample parts in parallel
