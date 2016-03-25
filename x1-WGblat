@@ -53,3 +53,4 @@ pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.psl blat.${DB_REFSEQ}.${QUERYN
 " > WGblat_${i}-on-${REFSEQNAME}.qsub
 qsub WGblat_${i}-on-${REFSEQNAME}.qsub
 done
+
