@@ -26,7 +26,7 @@ source ./0SOURCE
 # block_count(#18), blockSizes(#19), qStarts(#20), tStarts(#21).
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
-
+# This mp version of WGblat split samples into sevel parts to run blat in parallel.
 
 for i in ${SAMPLE}
 do
@@ -37,12 +37,13 @@ echo "
 #PBS -m abe
 #PBS -l nodes=1:ppn=${PPN},vmem=${VMEM}gb,walltime=${WALLTIME}:00:00
 #PBS -M ${EMAIL}
-#PBS -N x1-WGblat
+#PBS -N x1-WGblat-mp
 #PBS -j oe
 module add python
 module add blat
 
 cd ${prereq_DIR}
+# split sample into parts
 gt splitfasta -numfiles ${PARTS} ${QUERY}
 
 # run blat of sample parts in parallel
@@ -56,12 +57,11 @@ done
 # wait until all blat processes are finished
 wait
 
-# generate the representative psl
+# Combine all parts back into one file
 cd ${run_DIR}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 for ((k=1; k<=${PARTS}; k++))
 do
-# Combine all parts back into one file
 tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl |\
 cat - >> blat.${DB_REFSEQ}.${QUERYNAME}.psl
 done
