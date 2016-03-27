@@ -31,7 +31,7 @@ SEQ="soap.contig"
 SEQNAME="contig"
 
 # To speed up blat, split samples into smaller parts and run blat in parallel
-# PARTS is the number of parts for sample splitting.
+# PARTS is the number of parts the sample contigs are to be evenly splitted by file size.
 PARTS=6
 
 ## blastn
