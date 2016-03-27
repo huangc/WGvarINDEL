@@ -64,9 +64,15 @@ do
 pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl \
 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psr
 
-# recombine all parts back into one file
-cat blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
+# Combine all parts back into one file
+tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl |\
+cat - >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 done
+
+# Put back the header for the Reps.psl file
+head -5 blat.${DB_REFSEQ}.${QUERYNAME}.1.Reps.psl |\
+cat - blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl > tmp && \
+\mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 
 " > WGblat_${i}-on-${REFSEQNAME}.qsub
 qsub WGblat_${i}-on-${REFSEQNAME}.qsub
