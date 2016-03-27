@@ -13,6 +13,7 @@
 #4. Generate indel tables for each insertion and deletion.
 #5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 #6. Use the indel summary table to retrieve indel sequences.
+#7. This mp version of WGblat split samples into sevel parts to run blat in parallel.
 
 source ./0SOURCE
 
@@ -26,7 +27,6 @@ source ./0SOURCE
 # block_count(#18), blockSizes(#19), qStarts(#20), tStarts(#21).
 # psl have gap info in fields #5 (Q_gap_count), #6 (Q_gap_bases), #7 (T_gap_count), #8 (T_gap_bases)
 # psl can be further simplified to the best representatives using pslReps
-# This mp version of WGblat split samples into sevel parts to run blat in parallel.
 
 for i in ${SAMPLE}
 do
