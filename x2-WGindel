@@ -46,7 +46,7 @@ Q_size Q_start Q_end T_size T_start T_end block_count blockSizes qStarts tStarts
 cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps > blat.${DB_REFSEQ}.${QUERYNAME}.psl.Gaps
 done
 
-# 
+# now generate psl.perGap records from each psl.gap record
 cd ${run_DIR}
 for i in ${SAMPLE}
 do
