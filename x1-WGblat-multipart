@@ -53,7 +53,7 @@ blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE}
 ${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.${k} blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl &
 done
 
-# wait until all blat processes are done
+# wait until all blat processes are finished
 wait
 
 # generate the representative psl
@@ -61,18 +61,19 @@ cd ${run_DIR}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 for ((k=1; k<=${PARTS}; k++))
 do
-pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl \
-blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psr
-
 # Combine all parts back into one file
-tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.Reps.psl |\
-cat - >> blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
+tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl |\
+cat - >> blat.${DB_REFSEQ}.${QUERYNAME}.psl
 done
 
 # Put back the header for the Reps.psl file
-head -5 blat.${DB_REFSEQ}.${QUERYNAME}.1.Reps.psl |\
-cat - blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl > tmp && \
-\mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
+head -5 blat.${DB_REFSEQ}.${QUERYNAME}.1.psl |\
+cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl > tmp && \
+\mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl
+
+# Filter for only the representative records
+pslReps -singleHit blat.${DB_REFSEQ}.${QUERYNAME}.psl blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl \
+blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psr
 
 " > WGblat_${i}-on-${REFSEQNAME}.qsub
 qsub WGblat_${i}-on-${REFSEQNAME}.qsub
