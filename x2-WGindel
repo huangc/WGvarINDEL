@@ -51,12 +51,13 @@ cd ${run_DIR}
 for i in ${SAMPLE}
 do
 echo "
-mkdir $i
-cd $i
+cd ${run_DIR}
+mkdir ${run_DIR}/$i
+cd ${run_DIR}/$i
 
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-ln -s ../blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps .
+ln -s ${run_DIR}/blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps .
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
 len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps`
 for ((k=1; k<=$len; k++))
@@ -146,6 +147,7 @@ wait
 # The gaps due to deletions can be inferred from tGapSize of 1, 154, 7, 2 (none-zeros), sum up to 164 bp (TgapBases=164).
 
 ##-----------
+cd ${run_DIR}
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
