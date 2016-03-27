@@ -6,6 +6,7 @@
 ##-------------------------------------------
 ## Workflow description:
 #1. Blat of sample contigs (by SOAP-denovo assembly) against WG reference.
+#   To speed up the blat step, sample contigs are splitted into several parts to run blat in parallel.
 #2. Generate filtered blat hits table for contigs that contain gaps whose total length
 #   larger than the defined size (e.g. GAP_MINSIZE=100, defined in the source file).
 #3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info
@@ -13,7 +14,6 @@
 #4. Generate indel tables for each insertion and deletion.
 #5. Make indel summary table that combines same indels from all samples in each row based on the indel features
 #6. Use the indel summary table to retrieve indel sequences.
-#7. This mp version of WGblat split samples into sevel parts to run blat in parallel.
 
 source ./0SOURCE
 
@@ -37,7 +37,7 @@ echo "
 #PBS -m abe
 #PBS -l nodes=1:ppn=${PPN},vmem=${VMEM}gb,walltime=${WALLTIME}:00:00
 #PBS -M ${EMAIL}
-#PBS -N x1-WGblat-mp
+#PBS -N x1-WGblat
 #PBS -j oe
 module add python
 module add blat
