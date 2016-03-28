@@ -47,7 +47,6 @@ cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps > blat.${DB_REFSEQ}.${QUERYNAME}.p
 done
 
 # now generate psl.perGap records from each psl.gap record
-cd ${run_DIR}
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
@@ -134,7 +133,6 @@ done
 # The gaps due to deletions can be inferred from tGapSize of 1, 154, 7, 2 (none-zeros), sum up to 164 bp (TgapBases=164).
 
 ##-----------
-cd ${run_DIR}
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
