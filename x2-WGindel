@@ -50,14 +50,8 @@ done
 cd ${run_DIR}
 for i in ${SAMPLE}
 do
-echo "
-cd ${run_DIR}
-mkdir ${run_DIR}/$i
-cd ${run_DIR}/$i
-
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-ln -s ${run_DIR}/blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps .
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
 len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps`
 for ((k=1; k<=$len; k++))
@@ -121,15 +115,8 @@ echo "$Qname $Tname $QgapCount $QgapBases $TgapCount $TgapBases $blockCount $qSt
 done
 
 cat rec.perGap >> blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
-
 done
-" > ${i}.perGap.sh
-sh ./${i}.perGap.sh
-
 done
-
-# wait until all psl.perGap processes are finished
-wait
 
 #4. Generate indel tables for insertion and deletion based on the filter of GAP_MINNUM and GAP_MINSIZE 
 ## Using locus10036 as a typical perGap record example
