@@ -32,7 +32,7 @@ SEQNAME="contig"
 
 # To speed up blat, split samples into smaller parts and run blat in parallel
 # PARTS is the number of parts the sample contigs are to be evenly splitted by file size.
-PARTS=6
+PARTS=18
 
 ## blastn
 # Add blast+ directory to the PATH
@@ -71,7 +71,7 @@ GAP_MAXSIZE=1000000 #Maximal gap size in bp, less than and including this number
 # takes about 120 hrs on Mason. Plan carefully for submitting the job.
 # Alternatively, set up PARTS to run blat in parallel.
 # WALLTIME=120
-WALLTIME=48
-PPN=16
+WALLTIME=24
+PPN=20
 VMEM=40
 
