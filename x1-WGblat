@@ -51,7 +51,7 @@ cd ${run_DIR}
 for ((k=1; k<=${PARTS}; k++))
 do
 blat -t=dna -q=dna -out=psl -minIdentity=${PERC_IDENTITY} -minScore=${MIN_SCORE} -mask=lower \
-${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.${k} blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl &
+${prereq_DIR}/${REFSEQ} ${prereq_DIR}/${QUERY}.\$k blat.${DB_REFSEQ}.${QUERYNAME}.\$k.psl &
 done
 
 # wait until all blat processes are finished
