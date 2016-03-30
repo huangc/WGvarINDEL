@@ -60,7 +60,10 @@ wait
 
 # Combine all parts back into one file
 cd ${run_DIR}
+\rm blat.${DB_REFSEQ}.${QUERYNAME}.psl
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
+\rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psr
+
 for ((k=1; k<=${PARTS}; k++))
 do
 tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.\$k.psl |\
