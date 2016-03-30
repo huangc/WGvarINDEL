@@ -44,6 +44,7 @@ module add blat
 
 cd ${prereq_DIR}
 # split sample into parts
+\rm -r ${QUERY}.*
 gt splitfasta -numfiles ${PARTS} ${QUERY}
 
 # run blat of sample parts in parallel
