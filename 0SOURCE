@@ -69,7 +69,7 @@ GAP_MAXSIZE=1000000 #Maximal gap size in bp, less than and including this number
 ## qsub parameters for x1-WGblat job running on Mason 
 # The run time for whole genome blat of a typical 3kRGP rice cultivar contigs against reference rice Japonica
 # takes about 120 hrs on Mason. Plan carefully for submitting the job.
-# Alternatively, set up PARTS to run in parallel.
+# Alternatively, set up PARTS to run blat in parallel.
 # WALLTIME=120
 WALLTIME=48
 PPN=16
