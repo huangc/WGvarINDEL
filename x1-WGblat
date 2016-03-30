@@ -62,7 +62,7 @@ cd ${run_DIR}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl
 for ((k=1; k<=${PARTS}; k++))
 do
-tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.${k}.psl |\
+tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.\$k.psl |\
 cat - >> blat.${DB_REFSEQ}.${QUERYNAME}.psl
 done
 
