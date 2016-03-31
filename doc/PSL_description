@@ -26,3 +26,4 @@ blockCount - Number of blocks in the alignment.
 blockSizes - Comma-separated list of sizes of each block.
 qStarts - Comma-separated list of start position of each block in query.
 tStarts - Comma-separated list of start position of each block in target.
+
