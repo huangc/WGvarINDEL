@@ -26,7 +26,7 @@ cd ${prereq_DIR}
 for i in ${SAMPLE}
 do
 # ln -s ${denovo_DIR}/${i}/${i}-SOAP/${i}-soap.contig .
-ln -s ${denovo_DIR}/${i}-soap.contig .
+ln -s ${denovo_DIR}/${i}/${i}-soap.contig .
 makeblastdb -in ${i}-soap.contig -dbtype nucl -out DB_${i}_contig -parse_seqids
 done
 
