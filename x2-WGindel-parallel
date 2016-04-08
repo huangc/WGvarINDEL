@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -m abe
-#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=24:00:00
-#PBS -N x2-WGindel
+#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=4:00:00
+#PBS -N x2-WGindelT
 #PBS -j oe
 
 module add python
@@ -14,110 +14,121 @@ module add blat
 cd $PBS_O_WORKDIR
 source ./0SOURCE
 cd ${run_DIR}
-
-#-----
-#2. Generate filtered blat hits table for contigs that contain gaps whose total length larger than the defined size (GAP_MINSIZE=100 bp).
-#
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
-tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl |\
-awk -v gap_minnum="${GAP_MINNUM}" '{ OFS="\t"; if ( $5 >= gap_minnum || $7 >= gap_minnum ) print $0 }'\
- > blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
-done
+
+echo "
+#!/bin/bash
+source ${WORK_DIR}/0SOURCE
+cd ${run_DIR}
+mkdir -p t_${i}
+cd t_${i}
+ln -s ../blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl .
 
 #-----
-#3. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info from the Blat result.
+#1. Generate filtered blat hits table for contigs that contain gaps in query (insertion) or target (deletion).
+#
+tail -n+6 blat.${DB_REFSEQ}.${QUERYNAME}.Reps.psl |\
+ awk -v gap_minnum="${GAP_MINNUM}" '{ OFS=\"\\t\"; if ( \$5 >= gap_minnum || \$7 >= gap_minnum ) print \$0 }'\
+ > blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
+
+#-----
+#2. Calculate the Q_gapStarts, Q_gapSizes, T_gapStarts and T_gapSizes based on each gap using the block info from the Blat result.
 #
 # make a table with these info:
 # Q_name(#10), T_name(#14), Q_gap_count(#5), Q_gap_bases(#6), T_gap_count(#7), T_gap_bases(#8),
 # Q_size(#11), Q_start(#12), Q_end(#13), T_size(#15), T_start(#16), T_end(#17),
 # block_count(#18), blockSizes(#19), qStarts(#20), tStarts(#21)
-
-for i in ${SAMPLE}
-do
-QUERY=${i}-${SEQ}
-QUERYNAME=${i}.${SEQNAME}
-awk '{ print $10,$14,$5,$6,$7,$8,$11,$12,$13,$15,$16,$17,$18,$19,$20,$21 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps\
- | sort -k 2 -t " " > tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
-echo "Q_name T_name Q_gap_count Q_gap_bases T_gap_count T_gap_bases \
-Q_size Q_start Q_end T_size T_start T_end block_count blockSizes qStarts tStarts" |\
-cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps > blat.${DB_REFSEQ}.${QUERYNAME}.psl.Gaps
-done
+#
+awk '{ print \$10,\$14,\$5,\$6,\$7,\$8,\$11,\$12,\$13,\$15,\$16,\$17,\$18,\$19,\$20,\$21 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps\
+ | sort -k 2 -t \" \" > tmp && \mv tmp blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps
+echo \"Q_name T_name Q_gap_count Q_gap_bases T_gap_count T_gap_bases \
+Q_size Q_start Q_end T_size T_start T_end block_count blockSizes qStarts tStarts\" |\
+ cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps > blat.${DB_REFSEQ}.${QUERYNAME}.psl.Gaps
 
 # now generate psl.perGap records from each psl.gap record
-for i in ${SAMPLE}
-do
-QUERY=${i}-${SEQ}
-QUERYNAME=${i}.${SEQNAME}
 \rm blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
-len=`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps`
-for ((k=1; k<=$len; k++))
+len=\`awk 'END { print NR }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps\`
+for ((k=1; k<=\$len; k++))
 do
-head -$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps | tail -1 > rec
-cut -d " " -f1 rec > rec.Qname
-cut -d " " -f2 rec > rec.Tname
-cut -d " " -f3 rec > rec.QgapCount
-cut -d " " -f4 rec > rec.QgapBases
-cut -d " " -f5 rec > rec.TgapCount
-cut -d " " -f6 rec > rec.TgapBases
+head -\$k blat.${DB_REFSEQ}.${QUERYNAME}.psl.gaps | tail -1 > rec
+cut -d \" \" -f1 rec > rec.Qname
+cut -d \" \" -f2 rec > rec.Tname
+cut -d \" \" -f3 rec > rec.QgapCount
+cut -d \" \" -f4 rec > rec.QgapBases
+cut -d \" \" -f5 rec > rec.TgapCount
+cut -d \" \" -f6 rec > rec.TgapBases
 
-cut -d " " -f7 rec > rec.Qsize
-cut -d " " -f8 rec > rec.Qstart
-cut -d " " -f9 rec > rec.Qend
-cut -d " " -f10 rec > rec.Tsize
-cut -d " " -f11 rec > rec.Tstart
-cut -d " " -f12 rec > rec.Tend
+cut -d \" \" -f7 rec > rec.Qsize
+cut -d \" \" -f8 rec > rec.Qstart
+cut -d \" \" -f9 rec > rec.Qend
+cut -d \" \" -f10 rec > rec.Tsize
+cut -d \" \" -f11 rec > rec.Tstart
+cut -d \" \" -f12 rec > rec.Tend
 
-cut -d " " -f13 rec > rec.blockCount
-cut -d " " -f14 rec > rec.blockSizes
-cut -d " " -f15 rec > rec.qStarts
-cut -d " " -f16 rec > rec.tStarts
+cut -d \" \" -f13 rec > rec.blockCount
+cut -d \" \" -f14 rec > rec.blockSizes
+cut -d \" \" -f15 rec > rec.qStarts
+cut -d \" \" -f16 rec > rec.tStarts
 
-blockCount=`cat rec.blockCount`
+blockCount=\`cat rec.blockCount\`
 \rm rec.perGap
-for ((m=1; m<$blockCount; m++))
+for ((m=1; m<\$blockCount; m++))
 do
-blockSize=`cut -d"," -f $m rec.blockSizes`
-# tSize=`cut -d"," -f $m rec.blockSizes`
+blockSize=\`cut -d\",\" -f \$m rec.blockSizes\`
 
-Qname=`cat rec.Qname`
-Tname=`cat rec.Tname`
-QgapCount=`cat rec.QgapCount`
-QgapBases=`cat rec.QgapBases`
-qStart=`cut -d"," -f $m rec.qStarts`
-qEnd=`expr $qStart + $blockSize`
+Qname=\`cat rec.Qname\`
+Tname=\`cat rec.Tname\`
+QgapCount=\`cat rec.QgapCount\`
+QgapBases=\`cat rec.QgapBases\`
+qStart=\`cut -d\",\" -f \$m rec.qStarts\`
+qEnd=\`expr \$qStart + \$blockSize\`
 
-TgapCount=`cat rec.TgapCount`
-TgapBases=`cat rec.TgapBases`
-tStart=`cut -d"," -f $m rec.tStarts`
-tEnd=`expr $tStart + $blockSize`
+TgapCount=\`cat rec.TgapCount\`
+TgapBases=\`cat rec.TgapBases\`
+tStart=\`cut -d\",\" -f \$m rec.tStarts\`
+tEnd=\`expr \$tStart + \$blockSize\`
 
-next=`expr $m + 1`
-qStartNext=`cut -d"," -f $next rec.qStarts`
-qSizeNext=`cut -d"," -f $next rec.blockSizes`
-qEndNext=`expr $qStartNext + $qSizeNext`
-tStartNext=`cut -d"," -f $next rec.tStarts`
-tSizeNext=`cut -d"," -f $next rec.blockSizes`
-tEndNext=`expr $tStartNext + $tSizeNext`
+next=\`expr \$m + 1\`
+qStartNext=\`cut -d\",\" -f \$next rec.qStarts\`
+qSizeNext=\`cut -d\",\" -f \$next rec.blockSizes\`
+qEndNext=\`expr \$qStartNext + \$qSizeNext\`
+tStartNext=\`cut -d\",\" -f \$next rec.tStarts\`
+tSizeNext=\`cut -d\",\" -f \$next rec.blockSizes\`
+tEndNext=\`expr \$tStartNext + \$tSizeNext\`
 
-qGapSize=`expr $qStartNext - $qEnd`
-qGapStart=$qEnd
-qGapEnd=$qStartNext
+qGapSize=\`expr \$qStartNext - \$qEnd\`
+qGapStart=\$qEnd
+qGapEnd=\$qStartNext
 
-tGapSize=`expr $tStartNext - $tEnd`
-tGapStart=$tEnd
-tGapEnd=$tStartNext
+tGapSize=\`expr \$tStartNext - \$tEnd\`
+tGapStart=\$tEnd
+tGapEnd=\$tStartNext
 
-echo "$Qname $Tname $QgapCount $QgapBases $TgapCount $TgapBases $blockCount $qStart $qEnd $qGapSize $qStartNext $qEndNext $tStart $tEnd $tGapSize $tStartNext $tEndNext" >> rec.perGap
+echo \"\$Qname \$Tname \$QgapCount \$QgapBases \$TgapCount \$TgapBases \$blockCount \$qStart \$qEnd \$qGapSize \$qStartNext \$qEndNext \$tStart \$tEnd \$tGapSize \$tStartNext \$tEndNext\" >> rec.perGap
 done
 
 cat rec.perGap >> blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap
 done
+
+" > x2-WGindelT-perGap-${i}
 done
 
-#4. Generate indel tables for insertion and deletion based on the filter of GAP_MINNUM and GAP_MINSIZE 
+
+## Submit 
+cd ${run_DIR}
+for i in ${SAMPLE}
+do
+sh x2-WGindelT-perGap-${i} &
+done
+
+# Wait for all jobs are finished
+wait
+
+##-----------
+#3. Generate indel tables for insertion and deletion based on the filter of GAP_MINSIZE and GAP_MAXSIZE 
 ## Using locus10036 as a typical perGap record example
 # Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext
 # 1125885 locus10036 4 13 4 164 8 0 135 4 139 232 380 515 0 515 608
@@ -131,12 +142,13 @@ done
 # There are total of 8 blocks (blockCount=8), resulted from 4 insertions (QgapCount=4) and 4 deletions (TgapCount=4).
 # The gaps due to insertions can be inferred from qGapSize of 4, 6, 1, 2 (non-zeros), sum up to 13 bp (QgapBases=13).
 # The gaps due to deletions can be inferred from tGapSize of 1, 154, 7, 2 (none-zeros), sum up to 164 bp (TgapBases=164).
-
-##-----------
+#
+cd ${run_DIR}
 for i in ${SAMPLE}
 do
 QUERY=${i}-${SEQ}
 QUERYNAME=${i}.${SEQNAME}
+\cp t_${i}/blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap . 
 
 awk -v gap_minsize="${GAP_MINSIZE}" -v gap_maxsize="${GAP_MAXSIZE}" '{ OFS="\t"; if ( $15 >= gap_minsize && $15 <= gap_maxsize ) print $0 }' blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap | sort -t " " -k2 | uniq > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.t
 echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd qGapSize qStartNext qEndNext tStart tEnd tGapSize tStartNext tEndNext" | cat - blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.t > blat.${DB_REFSEQ}.${QUERYNAME}.psl.perGap.T
@@ -146,8 +158,8 @@ echo "Qname Tname QgapCount QgapBases TgapCount TgapBases blockCount qStart qEnd
 
 done
 
-
-#5a. Make a indel summary table that combines same indels from all samples in each row based on the indel features, with the following columns:
+##-----------
+#4. Make a indel summary table that combines same indels from all samples in each row based on the indel features, with the following columns:
 # Tname TgapStart TgapSize Qname qGapStart qGapSize Samples, such as:
 # locus12345 1114 0 1357246 2476 500 YB1;YB2;YB4;YB5;YB6;YB8;
 # Note "q" (query) is for insertion, and "t" (target) is for deletion.
@@ -189,7 +201,7 @@ echo "$i" >> $Tname.$tGapStart.$tGapSize.$Qname.$qGapStart.$qGapSize.sample
 done
 done
 
-#5b. MAKE A summary indel table by getting all file names of $Tname.$tGapStart.$tGapSize.$Qname.$qGapStart.$qGapSize, 
+#5. MAKE A summary indel table by getting all file names of $Tname.$tGapStart.$tGapSize.$Qname.$qGapStart.$qGapSize, 
 # then making the newlines in each above file into ";", so
 # YB1
 # YB2
