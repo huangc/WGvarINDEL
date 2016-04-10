@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -m abe
-#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=4:00:00
+#PBS -l nodes=1:ppn=20,vmem=40gb,walltime=12:00:00
 #PBS -N x2-WGindelT
 #PBS -j oe
 
