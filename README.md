@@ -16,9 +16,8 @@ This workflow is to to find whole genome (WG) long insertion and deletion (indel
 2. Edit and prepare for the prerequisite files and softwares as described in PREREQ.sh, then `sh PREREQ.sh`
 3. Generate and submit qsub script for whole genome blat alignment on Mason: `sh x1-WGblat`
 4. Submit qsub script for whole genome indel analysis on Mason: `qsub x2-WGindel`
-5. (Alternatively) Submit x2 qsub script that run each sample in parallel: `qsub x2-WGindel-mp`
-6. Find main outputs in *data/*.
-7. Cleanup files with `sh xcleanup`
+5. Find main outputs in *data/*.
+6. Cleanup files with `sh xcleanup`
 
 ## Sub-directories for workflow implementation:
 1. *prereq/*: prerequisite inputs such as retrieval and storage of TRegGA assembled contigs; retrieval and storage of reference genomes, preparation of BLAST+ database for reference genome.
